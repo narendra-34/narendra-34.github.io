@@ -47,15 +47,17 @@
       var isClose=true;
         const stopwords = ["of", "the", "a", "an", "any", "is", "can", "who", "what", "why", "whom"];
         var editor = "sorts\n" +
-            " #types = {veggies,appliances,meat,clothes,dailycare}.\n"+
+            " #types = {veggies,appliances,meat,clothes,dailycare,medicines}.\n"+
     "#veggies={carrot,tomato,peppers}.\n"+
     "#appliances={refrigerator,oven,mobile}.\n"+
     "#meat={beef,pork,lamb}.\n"+
     "#clothes={tshirt,hoodie,jeans}.\n"+
     "#dailycare={toothpaste,shampoo,soap}.\n"+
+    "#medicines={tylenol,advil,ibuprofen}. \n"+
     "#availability={available,unavailable}.\n"+
-   "#price={10,20,30,40,50,60,70,200,400,600,800}.\n"+
-    "#location={aislea1,aislea2,aisleb1,aisleb2,aislec1}.\n"+
+   "#price={2,3,5,10,20,30,40,50,60,70,200,400,600,800}.\n"+
+    "#location={aislea1,aislea2,aisleb1,aisleb2,aislec1,aislec2}.\n"+
+    "#delivery={shipping,instore,instore_and_ship}.\n"+
       
             "predicates\n" +
             "items(#types). \n"+
@@ -64,21 +66,32 @@
     "meat(#meat). \n"+
     "clothes(#clothes). \n"+
     "dailycare(#dailycare). \n"+
+    "delivery(#delivery). \n"+
+    "medicines(#medicines). \n" +
    "pricev(#price,#veggies). \n"+
     "pricea(#price,#appliances). \n"+
     "pricem(#price,#meat). \n"+
     "pricec(#price,#clothes). \n"+
     "priced(#price,#dailycare). \n"+
+    "pricemd(#price,#medicines). \n" +
     "instockv(#availability,#veggies). \n"+
     "instocka(#availability,#appliances). \n"+
     "instockm(#availability,#meat). \n"+
     "instockc(#availability,#clothes). \n"+
     "instockd(#availability,#dailycare). \n"+
+    "instockmd(#availability,#medicines). \n" +
     "placev(#location,#veggies). \n"+
     "placea(#location,#appliances). \n"+
     "placem(#location,#meat). \n"+
     "placec(#location,#clothes). \n"+
     "placed(#location,#dailycare). \n"+
+    "placemd(#location,#medicines). \n" +
+    "deliveryv(#delivery,#veggies). \n" +
+    "deliverya(#delivery,#appliances). \n" +
+    "deliverym(#delivery,#meat). \n" +
+    "deliveryc(#delivery,#clothes). \n" +
+    "deliveryd(#delivery,#dailycare). \n" +
+    "deliverymd(#delivery,#medicines). \n" +
       
             "rules\n" +
            "items(veggies). \n"+
@@ -86,6 +99,7 @@
     "items(meat). \n"+
     "items(clothes). \n"+
     "items(dailycare). \n"+
+    "items(medicines). \n"+
     "veggies(tomato). \n"+
     "veggies(carrot). \n"+
     "veggies(peppers). \n"+
@@ -101,6 +115,12 @@
    "dailycare(toothpaste). \n"+
     "dailycare(shampoo). \n"+
     "dailycare(soap). \n"+
+    "medicines(tylenol). \n"+
+    "medicines(advil). \n"+
+    "medicines(ibuprofen). \n"+
+    "delivery(shipping). \n"+
+    "delivery(instore). \n"+
+    "delivery(instore_and_ship). \n"+
     "instockv(available,tomato). \n"+
     "instockv(unavailable,carrot). \n"+
     "instockv(available,peppers). \n"+
@@ -116,6 +136,9 @@
     "instockd(available,toothpaste). \n"+
     "instockd(available,shampoo). \n"+
     "instockd(unavailable,soap). \n"+
+    "instockmd(available,tylenol). \n"+
+    "instockmd(available,advil). \n"+
+    "instockmd(unavailable,ibuprofen). \n"+
     "placev(aislea1,tomato). \n"+
    " placev(aislea1,carrot). \n"+
     "placev(aislea1,peppers). \n"+
@@ -131,6 +154,9 @@
     "placed(aislec1,toothpaste). \n"+
     "placed(aislec1,shampoo). \n"+
     "placed(aislec1,soap). \n"+
+    "placemd(aislec2,tylenol). \n"+
+    "placemd(aislec2,advil). \n"+
+   "placemd(aislec2,ibuprofen). \n"+
     "pricev(10,carrot). \n"+
     "pricev(10,tomato). \n"+
     "pricev(10,peppers). \n"+
@@ -145,7 +171,32 @@
     "pricec(30,jeans). \n"+
     "priced(10,toothpaste). \n"+
     "priced(10,shampoo). \n"+
-    "priced(10,soap).";
+    "priced(10,soap). \n"+
+    "pricemd(2,tylenol). \n"+
+    "pricemd(3,advil). \n"+
+    "pricemd(5,ibuprofen). \n"+
+    
+    "deliveryv(instore,carrot). \n"+
+    "deliveryv(instore,tomato). \n"+
+    "deliveryv(instore,peppers). \n"+
+    "deliverya(instore_and_ship,oven). \n"+
+    "deliverya(instore_and_ship,refrigerator). \n"+
+    "deliverya(instore_and_ship,mobile). \n"+
+    "deliverym(instore,beef). \n"+
+    "deliverym(instore,pork). \n"+
+    "deliverym(instore,lamb). \n"+
+    "deliveryc(shipping,tshirt). \n"+
+    "deliveryc(shipping,hoodie). \n"+
+    "deliveryc(shipping,jeans). \n"+
+   " deliveryd(shipping,toothpaste). \n"+
+    "deliveryd(shipping,shampoo). \n"+
+    "deliveryd(shipping,soap). \n"+
+    "deliverymd(instore,tylenol). \n"+
+   " deliverymd(instore,advil). \n"+
+    "deliverymd(instore,ibuprofen).";
+    
+    
+    
         // sorts
         var contstring = editor.split("sorts\n")[1].split("predicates\n");
         var sortstring = contstring[0].split('.');
