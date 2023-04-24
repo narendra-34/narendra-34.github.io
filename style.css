@@ -64,7 +64,7 @@ button i.fa {
   margin-top: 20px;
   font-size: 24px;
   font-weight: bold;
-  color: #028A0F;
+  color: #3366cc;
 }
 
 #answer-box {
@@ -79,14 +79,7 @@ button i.fa {
   height: calc(100vh - 30px);
 }
 
-.rentals {
-  background-image: url(./bg-img.jpg);
-  background-repeat: no-repeat;
-height: 100%;
-background-size: 600px;
-background-position:bottom right;
 
-}
 
 .content {
   margin-left: 250px;
